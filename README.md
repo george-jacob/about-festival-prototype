@@ -8,11 +8,9 @@ Public information about the prototype festival programme app.
   
 <img width="300" alt="Screenshot_20261110-220039" src="https://github.com/user-attachments/assets/46bfab48-d318-498b-a838-7753ac66bfd2" />
 
-## Closed source, for now
-For now, the code is private while the concept is being established.  
-Part or all of the project may become open-source in future.  
+## About  
 
-## Notable features
+### Notable features
 * Centerpiece: a continuous timeline for a whole multi-venue festival.
 * Real location-based weather, sunrise and sunset on the timeline. (More info below.)
 * Zoom for detail: pinch and scroll around the timeline, with event detail shown at high zoom.
@@ -25,22 +23,16 @@ _Coming..._
 * Messages and updates from festival organisers.
 * ...
 
-## Project diary
+### Project diary
 _N.B. Lag between project progress and diary updates._
 [Project diary](https://www.grjacob.com/topics/project-diary-festival-programme-prototype)  
 May move in future, e.g. Substack.
 
-## Stack
-* UI: React, Node.JS, TypeScript, Vite, Workbox.
-* Back end: Google Cloud Run. DB & events TBC.
-* Hosting: Google Cloud, Firebase, CloudFlare.
-* Testing: Vitest, Playwright
-* Other tooling: GitHub (actions), Claude Code.
+### Closed source, for now
+For now, the code is private while the concept is being established.  
+Part or all of the project may become open-source in future.  
 
-## Design
-Google Material Design (3) is the starting point. Some divergence for novel features.
-
-## Learning objectives
+### Learning objectives
 * Full stack, professional-grade setup from scratch (cloud, IaC, CI/CD, etc).
 * Claude Code use across a full stack.
 * Google Cloud (prior experience only AWS).
@@ -48,8 +40,33 @@ Google Material Design (3) is the starting point. Some divergence for novel feat
 * OpenTelemetry.
 * Material Design.
 
-## Weather data
+## Implementation
+### Stack
+* UI: React, Node.JS, TypeScript, Vite, Workbox.
+* Back end: Google Cloud Run. API in Node.JS, Typescript, containerised. DB & asynch mechanisms TBC.
+* Hosting: Google Cloud, Firebase, CloudFlare.
+* Testing: Vitest, Playwright
+* Other tooling: GitHub (actions), Claude Code.
+
+### Design
+Google Material Design (3) is the starting point. Some divergence for novel features.
+
+### CI/CD  
+_On opening or pushing to a PR:_
+* **CI** - Lint, format check, unit test, build, e2e test.
+* **Terraform plan** - If IaC is touched, run plan, add plan to PR as comment.
+* **PR preview** - Deploys UI (effective merge) to a preview channel in Firebase. (One preview channel per PR.) Adds URL to PR as comment.
+
+_On merge to main:_
+* **Deploy staging** - Deploys back end to Google Cloud, front end to Firebase, clears CloudFlare cache, checks connectivity.
+
+_On a schedule:_
+* **Dependabot updates** - Checks for available package upgrades and raises PRs.
+
+_On demand:_
+* **Take offline** - This killswitch disables Firebase hosting and sets Google Cloud Run to allow internal traffic only.
+
+### Weather data
 Weather forecast data comes from the MET Norway API, which covers the whole world.  
 [Met Norway licensing and crediting](https://www.met.no/en/free-meteorological-data/Licensing-and-crediting)  
-The prototype app requests weather data from its own back-end service, only for specific festival locations, preventing general misuse. The back-end in turn calls the MET API, but only as needed, to avoid unnecessary load.  
-
+The prototype app requests weather data from its own back-end service, only for specific festival locations, preventing general misuse. The back-end in turn calls the MET API, but only as needed, to avoid unnecessary load.
