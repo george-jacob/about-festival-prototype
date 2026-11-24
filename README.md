@@ -26,7 +26,7 @@ _Coming..._
 * ...
 
 ## Project diary
-_N.B. Lag between project progress and diary updates. May be out of date._
+_N.B. Lag between project progress and diary updates._
 [Project diary](https://www.grjacob.com/topics/project-diary-festival-programme-prototype)  
 May move in future, e.g. Substack.
 
